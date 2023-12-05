@@ -1,0 +1,35 @@
+{
+"URLS": {
+    "instagram":"https://instagram.com/mrsaxobeat55?igshid=NzZlODBkYWE4Ng%3D%3D&utm_source=qr",
+    "telegram":"https://t.me/Sinful_Servant",
+    "gitlab":"https://gitlab.com/SinfulSlave",
+    "linkedin":"https://www.linkedin.com/in/ivan-yermolenko-6a8a77279/",
+    "github":"https://github.com/SinfulServant",
+    "cheng":"https://cheng-island.com/",
+    "chengCode":"https://gitlab.com/SinfulSlave/cheng-frontend",
+    "resume":"https://sinfulservant.github.io/CV-app/",
+    "resumeCode":"https://github.com/SinfulServant/CV-app",
+    "currencyExchange":"https://sinfulservant.github.io/TestTaskExchangeRate/",
+    "currencyExchangeCode":"https://github.com/SinfulServant/TestTaskExchangeRate"
+     },
+  "TESTS": {
+    "FirstTest": {
+        "First": {
+            "Options": ["Чому все так сталося?","Правильна відповідь!","Чому все так сталося?","Чому все так сталося?"],
+            "Correct-answer": 2
+        },
+        "Second": {
+            "Options": ["Чому все так сталося?","Чому все так сталося?","Правильна відповідь!","Чому все так сталося?"],
+            "Correct-answer": 3
+        },
+        "Third": {
+            "Options": ["Правильна відповідь!","Чому все так сталося?","Чому все так сталося?","Чому все так сталося?"],
+            "Correct-answer": 1
+        },
+        "Forth": {
+            "Options": ["Чому все так сталося?","Чому все так сталося?","Чому все так сталося?","Правильна відповідь!"],
+            "Correct-answer": 4
+        }
+      }
+    }
+}
