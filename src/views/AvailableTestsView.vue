@@ -1,30 +1,54 @@
 <script>
-import ApiTests from './../../src/services/ApiTests.service'
+import { ref } from "vue";
+import ApiTests from "./../../src/services/ApiTests.service";
+import Spiner from "../components/Shared/Spiner.vue";
+
 export default {
-    setup() {
-        // Інші налаштування
-        return {};
-    },
+  components: { Spiner },
+  setup() {
+    const titleOfTests = ref([]);
 
-    data() {
-        return {
-            titleOfTests: [],
-        };
-    },
+    return { titleOfTests };
+  },
 
-    mounted() {
-        ApiTests.getTitles().then(res => this.titleOfTests.push(...res));
-        console.log(this.titleOfTests);
+  methods: {
+    toPassingTest(title) {
+      this.$router.push({
+        path: "/passing-test",
+        query: {title: title}
+      });
     },
+  },
+
+  mounted() {
+    ApiTests.getTitles().then((res) => {
+      res.push("One_else");
+      res.push("Very_long_Title");
+      // this.titleOfTests = ApiTests.formatTitles(res);
+      this.titleOfTests = ApiTests.formatTitles(res);
+    });
+  },
 };
-
-
-
 </script>
 
 <template>
-    <h2>Here are the tests you can take</h2>
-    <ul>
-        <!-- <li v-for=""></li> -->
+  <div class="pt-3 h-[85vh]">
+    <h2 class="text-2xl text-center">Here are the tests you can pass</h2>
+    <div class="border-b-2 py-1"></div>
+    <ul v-if="titleOfTests.length">
+      <li
+        v-for="title in titleOfTests"
+        :key="title"
+        class="flex justify-center pt-2"
+      >
+        <button
+          @click="toPassingTest(title)"
+          class="text-xl border px-[50px] py-1 hover:bg-green-100 rounded-lg w-[400px]"
+        >
+          {{ title }}
+        </button>
+      </li>
     </ul>
+    <Spiner v-else></Spiner>
+  </div>
 </template>

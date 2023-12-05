@@ -1,5 +1,5 @@
 <script>
-import { RouterLink } from "vue-router";
+// import { RouterLink } from "vue-router";
 export default {
   setup() {
     const classForLinks = "p-2 hover:bg-gray-200 rounded"

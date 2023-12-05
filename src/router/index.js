@@ -13,6 +13,12 @@ const router = createRouter({
       path: '/available-tests',
       name: 'available-tests',
       component: () => import('../views/AvailableTestsView.vue')
+    },
+    {
+      path: '/passing-test',
+      name: 'passing-test',
+      props: true,
+      component: () => import('../views/PassingTestView.vue')
     }
   ]
 })
