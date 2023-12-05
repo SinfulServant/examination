@@ -1,6 +1,5 @@
 import axios from "axios";
-const url =
-  "https://my-json-server.typicode.com/SinfulServant/jsonplaceholder/db/";
+const url = 'https://my-json-server.typicode.com/SinfulServant/jsonplaceholder/db/';
 const getQuestionsUrl = 'https://my-json-server.typicode.com/SinfulServant/jsonplaceholder/TESTS'
 
 class ApiTests {
