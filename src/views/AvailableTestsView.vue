@@ -1,34 +1,26 @@
-<script>
-import { ref } from "vue";
+<script setup>
+import { onMounted, ref } from "vue";
 import ApiTests from "./../../src/services/ApiTests.service";
 import Spiner from "../components/Shared/Spiner.vue";
+import { useRouter } from 'vue-router'
 
-export default {
-  components: { Spiner },
-  setup() {
-    const titleOfTests = ref([]);
+const titleOfTests = ref([]);
+const router = useRouter()
 
-    return { titleOfTests };
-  },
-
-  methods: {
-    toPassingTest(title) {
-      this.$router.push({
-        path: "/passing-test",
-        query: {title: title}
-      });
-    },
-  },
-
-  mounted() {
-    ApiTests.getTitles().then((res) => {
-      res.push("One_else");
-      res.push("Very_long_Title");
-      // this.titleOfTests = ApiTests.formatTitles(res);
-      this.titleOfTests = ApiTests.formatTitles(res);
-    });
-  },
+const toPassingTest = (title) => {
+  router.push({
+    path: "/passing-test",
+    query: { title: title },
+  });
 };
+
+onMounted(() => {
+  ApiTests.getTitles().then((res) => {
+    res.push("One_else");
+    res.push("Very_long_Title");
+    titleOfTests.value.push(...ApiTests.formatTitles(res));
+  });
+});
 </script>
 
 <template>
