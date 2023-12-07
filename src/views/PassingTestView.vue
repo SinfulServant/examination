@@ -10,6 +10,7 @@ function removeSpaces(inputString) {
 }
 const route = useRoute();
 const questions = ref([]);
+const allAnswers = {}
 
 onMounted(() => {
   getQuestions();
@@ -25,14 +26,24 @@ function getQuestions() {
       " Дуже довге питання, дуууууже довге питання :)";
   });
 }
+
+function writeAnswers(answer, i){
+  allAnswers[i] = answer.value
+  console.log(allAnswers)
+}
+
+function checkAnswers(){
+  console.log('Check answers')
+}
 </script>
 
 <template>
-  <div class="h-[85vh]">
+  <div class="min-h-[85vh] py-4" >
     <div v-if="questions.length" class="flex flex-col items-center">
       <template v-for="(question, i) in questions" :key="question">
-        <Question @response="(res) => console.log(res)" :question="question" :questionNumber="i"></Question>
+        <Question @sendAnswers="(answers) => writeAnswers(answers, i)" :question="question" :questionNumber="i"></Question>
       </template>
+      <button @click="checkAnswers" class="rounded-lg py-1 px-3 bg-blue-200 hover:bg-blue-300">Здати тест!</button>
     </div>
     <Spiner v-else></Spiner>
   </div>

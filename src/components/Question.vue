@@ -1,22 +1,43 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
+import "../assets/font/fontello-0ae12903/css/fontello.css";
 
 const props = defineProps({
   question: Object,
-  questionNumber: Number,
+  questionNumber: Number
 });
 const answers = ref([]);
-const emit = defineEmits(["response"]);
+const emit = defineEmits(["sendAnswers"]);
+const selectedCheckboxes = ref({});
+const showResult = ref(false)
 
-const selectAnswer = (i) => {
-  if(!answers.value.find((item) => item === i)) answers.value.push(i)
-  else answers.value = answers.value.filter((item) => item != i)
-  console.log(answers.value)
-};
+function selectAnswer(i) {
+  changeStateOfCheckbox(i);
+  i++;
+  if (!answers.value.find((item) => item === i)) answers.value.push(i);
+  else answers.value = answers.value.filter((item) => item != i);
+  emit("sendAnswers", answers);
+}
+
+function doShowResult() {}
+
+function isChecked(index) {}
 
 onMounted(() => {
-  console.log("Props from Question Vue: ", props);
+  console.log(props.question.Options);
+  createIsCheckedObject();
 });
+
+function createIsCheckedObject() {
+  props.question.Options.forEach((item, i) => {
+    selectedCheckboxes.value[i] = false;
+  });
+  console.log(selectedCheckboxes);
+}
+
+function changeStateOfCheckbox(i) {
+  selectedCheckboxes.value[i] = !selectedCheckboxes.value[i];
+}
 </script>
 
 <template>
@@ -30,11 +51,22 @@ onMounted(() => {
       <label class="w-[100%]">
         <input
           @change="selectAnswer(index)"
-          value=index
+          value="index"
           type="checkbox"
+          :checked="isChecked(index)"
         />
         {{ option }}
       </label>
+      <template v-if="showResult">
+        <i
+        v-if="index !== props.questionNumber && selectedCheckboxes[index]"
+        class="icon-cancel-squared text-red-500"
+      ></i>
+      <i
+        v-if="index == props.questionNumber && selectedCheckboxes[index]"
+        class="icon-ok-squared text-green-500"
+      ></i>
+      </template>
     </div>
   </div>
 </template>
