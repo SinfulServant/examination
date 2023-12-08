@@ -13,6 +13,7 @@ class ApiTests {
     }
   }
 
+  //Change "_" to " "
   formatTitles(titles) {
     return titles.map((item) => {
       return item
@@ -25,11 +26,12 @@ class ApiTests {
     });
   }
 
+  //Change " " to "_"
   removeSpaces(inputString) {
     return inputString.replace(/ /g, "_");
   }
 
-  async getTestQuestions(title) {
+  async getTestQuestions() {
     const response = await axios.get(getQuestionsUrl)
     return response.data
   }

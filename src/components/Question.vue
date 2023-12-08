@@ -1,71 +1,73 @@
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import "../assets/font/fontello-0ae12903/css/fontello.css";
 
 const props = defineProps({
   question: Object,
-  questionNumber: Number
+  questionTitle: Array,
+  questionNumber: Number,
+  toShowResult: Boolean,
+  canBeSeveralAnswers: Boolean
 });
-const answers = ref([]);
-const emit = defineEmits(["sendAnswers"]);
-const selectedCheckboxes = ref({});
-const showResult = ref(false)
-
-function selectAnswer(i) {
-  changeStateOfCheckbox(i);
-  i++;
-  if (!answers.value.find((item) => item === i)) answers.value.push(i);
-  else answers.value = answers.value.filter((item) => item != i);
-  emit("sendAnswers", answers);
-}
-
-function doShowResult() {}
-
-function isChecked(index) {}
 
 onMounted(() => {
-  console.log(props.question.Options);
-  createIsCheckedObject();
+  createObjectIsChecked();
 });
 
-function createIsCheckedObject() {
-  props.question.Options.forEach((item, i) => {
-    selectedCheckboxes.value[i] = false;
-  });
-  console.log(selectedCheckboxes);
+const emit = defineEmits(["sendAnswers"]);
+const selectedCheckboxes = ref({});
+
+
+function selectAnswer(event, i) {
+  if(!props.canBeSeveralAnswers){
+    for (let item in selectedCheckboxes.value){
+      selectedCheckboxes.value[item] = false
+    }
+    selectedCheckboxes.value[i] = true
+  }
+  sendToParentIsAnswerRight()
 }
 
-function changeStateOfCheckbox(i) {
-  selectedCheckboxes.value[i] = !selectedCheckboxes.value[i];
+function createObjectIsChecked() {
+  props.question.options.forEach((_, i) => {
+    selectedCheckboxes.value[i] = false;
+  });
+}
+
+function sendToParentIsAnswerRight() {
+    console.log(selectedCheckboxes.value[props.question.correctAnswer - 1])
+  if(selectedCheckboxes.value[props.question.correctAnswer - 1]) emit("sendAnswers", true);
+  else emit("sendAnswers", false);
 }
 </script>
 
 <template>
-  <div class="p-3 w-[300px] border rounded-lg my-2">
-    <h3 class="text-center">Питання {{ +questionNumber + 1 }}</h3>
+  <div class="p-3 w-[400px] border rounded-lg my-2">
+    <h3 class="text-center text-slate-600 py-2"><strong>{{ props.questionTitle[questionNumber] }}</strong></h3>
     <div
-      v-for="(option, index) in question.Options"
-      :key="option"
-      class="flex flex-row"
+    v-for="(option, index) in question.options"
+    :key="option"
+    class="flex flex-row justify-between"
     >
-      <label class="w-[100%]">
+      <label class="px-2">
         <input
-          @change="selectAnswer(index)"
+          @change="selectAnswer($event, index)"
           value="index"
           type="checkbox"
-          :checked="isChecked(index)"
+          :disabled="props.toShowResult"
+          v-model="selectedCheckboxes[index]"
         />
         {{ option }}
       </label>
-      <template v-if="showResult">
+      <template v-if="props.toShowResult">
         <i
-        v-if="index !== props.questionNumber && selectedCheckboxes[index]"
-        class="icon-cancel-squared text-red-500"
-      ></i>
-      <i
-        v-if="index == props.questionNumber && selectedCheckboxes[index]"
-        class="icon-ok-squared text-green-500"
-      ></i>
+          v-if="index + 1 !== props.question.correctAnswer && selectedCheckboxes[index]"
+          class="icon-cancel-squared text-red-500 float-right"
+        ></i>
+        <i
+          v-if="index + 1 == props.question.correctAnswer && selectedCheckboxes[index]"
+          class="icon-ok-squared text-green-500 float-right"
+        ></i>
       </template>
     </div>
   </div>

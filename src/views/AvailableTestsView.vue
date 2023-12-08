@@ -2,25 +2,28 @@
 import { onMounted, ref } from "vue";
 import ApiTests from "./../../src/services/ApiTests.service";
 import Spiner from "../components/Shared/Spiner.vue";
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 
 const titleOfTests = ref([]);
-const router = useRouter()
+const router = useRouter();
 
-const toPassingTest = (title) => {
+onMounted(() => {
+  getTitlesOfTests();
+});
+
+function toPassingTest(title) {
   router.push({
     path: "/passing-test",
     query: { title: title },
   });
-};
+}
 
-onMounted(() => {
+function getTitlesOfTests() {
+  // CHANGE
   ApiTests.getTitles().then((res) => {
-    res.push("One_else");
-    res.push("Very_long_Title");
-    titleOfTests.value.push(...ApiTests.formatTitles(res));
+    titleOfTests.value = ApiTests.formatTitles(res)
   });
-});
+}
 </script>
 
 <template>
