@@ -15,16 +15,13 @@ onMounted(() => {
   getQuestions();
 });
 
-function getQuestions() {
-  ApiTests.getTestQuestions(route.query.title).then((res) => {
-    const needQuestion = res[removeSpaces(route.query.title)];
-    const titleOfQuestions = []
-    for (let item in needQuestion) {
-      titleOfQuestions.push(`${item}`);
-      questions.value.push(needQuestion[item]);
-    }
-    ApiTests.formatTitles(titleOfQuestions).forEach(item => questionTitles.push(item))
-  });
+async function getQuestions() {
+  const test = await ApiTests.getTestQuestions(route.query.title);
+  console.log(test)
+  for (let item in test) {
+    questionTitles.push(`${ApiTests.replaceUnderscores(item)}`);
+    questions.value.push(test[item]);
+  }
 }
 
 function writeAnswers(answer, i) {
@@ -32,18 +29,17 @@ function writeAnswers(answer, i) {
 }
 
 function checkAnswers() {
-  let amountOfCorrectAnswers = 0
+  let amountOfCorrectAnswers = 0;
   isResultShow.value = true;
-  console.log(allAnswers)
-  for (let item in allAnswers){
-    if(allAnswers[item]) amountOfCorrectAnswers++
+  console.log(allAnswers);
+  for (let item in allAnswers) {
+    if (allAnswers[item]) amountOfCorrectAnswers++;
   }
-  return amountOfCorrectAnswers
+  return amountOfCorrectAnswers;
 }
 
-function removeSpaces(inputString) {
-  return inputString.replace(/ /g, "_");
-}
+
+
 </script>
 
 <template>
@@ -60,7 +56,12 @@ function removeSpaces(inputString) {
           :canBeSeveralAnswers="false"
         ></Question>
       </template>
-      <p v-if="isResultShow" class="border py-3 px-5 mt-2 text-xl rounded-xl bg-green-300">Правильних відповідей {{ checkAnswers() }}/{{ questions.length }}</p>
+      <p
+        v-if="isResultShow"
+        class="border py-3 px-5 mt-2 text-xl rounded-xl bg-green-300"
+      >
+        Правильних відповідей {{ checkAnswers() }}/{{ questions.length }}
+      </p>
       <button
         @click="checkAnswers"
         class="rounded-lg py-1 px-3 bg-blue-200 hover:bg-blue-300"

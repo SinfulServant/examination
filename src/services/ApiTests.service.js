@@ -1,8 +1,9 @@
 import axios from "axios";
 const url = 'https://my-json-server.typicode.com/SinfulServant/jsonplaceholder/db/';
-const getQuestionsUrl = 'https://my-json-server.typicode.com/SinfulServant/jsonplaceholder/TESTS'
 
 class ApiTests {
+
+  // get titles for AvailableTestsVue
   async getTitles() {
     try {
       const response = await axios.get(url);
@@ -13,7 +14,7 @@ class ApiTests {
     }
   }
 
-  //Change "_" to " "
+  //Change "_" to " " for Array
   formatTitles(titles) {
     return titles.map((item) => {
       return item
@@ -30,10 +31,17 @@ class ApiTests {
   removeSpaces(inputString) {
     return inputString.replace(/ /g, "_");
   }
+  // Change "_" to " "
+  replaceUnderscores(inputString) {
+    return inputString.replace(/_/g, " ");
+  }
 
-  async getTestQuestions() {
-    const response = await axios.get(getQuestionsUrl)
-    return response.data
+  // get test by title of test
+  async getTestQuestions(title) {
+    const allTests = await axios.get(url)
+    const urlToNeededTest = allTests.data.TESTS[this.removeSpaces(title)] 
+    const neededTest = await axios.get(urlToNeededTest)
+    return neededTest.data
   }
 }
 

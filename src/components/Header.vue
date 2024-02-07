@@ -17,6 +17,7 @@ export default {
     <nav class="flex">
       <RouterLink :class=classForLinks to="/">Home</RouterLink>
       <RouterLink :class=classForLinks to="/available-tests">Available tests</RouterLink>
+      <RouterLink :class=classForLinks to="/resourses-for-study">Resourses for education</RouterLink>
     </nav>
   </header>
 </template>
