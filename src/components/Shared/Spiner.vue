@@ -1,28 +1,43 @@
 <template>
-  <div class="spinner-container">
-    <div class="spinner"></div>
+  <div class="loader-container">
+    <div class="loader"></div>
   </div>
 </template>
 
 <style>
-.spinner-container {
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 40px;
+  aspect-ratio: 1;
+  --g1: conic-gradient(from 90deg at 1.5px 1.5px, #0000 90deg, #fff 0);
+  --g2: conic-gradient(from -90deg at 16px 16px, #0000 90deg, #fff 0);
+  background: var(--g1), var(--g1), var(--g1),  var(--g1), var(--g2), var(--g2), var(--g2), var(--g2);
+  background-size: 18px 18px;
+  background-repeat: no-repeat;
+  animation: l7 1.5s infinite;
+}
+@keyframes l7 {
+  0% {
+    background-position: 0 0, 0 100%, 100% 100%, 100% 0;
+  }
+  25% {
+    background-position: 100% 0, 0 100%, 100% 100%, 0 0;
+  }
+  50% {
+    background-position: 100% 0, 0 0, 100% 100%, 0 100%;
+  }
+  75% {
+    background-position: 100% 0, 0 0, 0 100%, 100% 100%;
+  }
+  100% {
+    background-position: 100% 100%, 0 0, 0 100%, 100% 0;
+  }
+}
+.loader-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 80%;
 }
 
-.spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-top: 4px solid #cbcbcb;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
 </style>

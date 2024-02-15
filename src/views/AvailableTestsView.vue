@@ -43,18 +43,19 @@ function getTitlesOfTests() {
         v-model="searchInput"
         type="text"
         placeholder="Search test"
-        class="text-center outline-0"
+        class="text-center outline-0 bg-inherit placeholder:text-white"
       />
     </div>
     <ul v-if="filtedTitles.length">
       <li
-        v-for="title in filtedTitles"
+        v-for="(title, i) in filtedTitles"
         :key="title"
         class="flex justify-center pt-2"
       >
         <button
+          v-appearance-animation="{delay: 100 + (i * 20)}"
           @click="toPassingTest(title)"
-          class="text-xl border px-[50px] py-1 hover:bg-green-100 rounded-lg w-[400px]"
+          class="text-xl border px-[50px] py-1 hover:bg-gray-100 hover:text-black ease-in duration-100 rounded-lg w-[400px]"
         >
           {{ title }}
         </button>

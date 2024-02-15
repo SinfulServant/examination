@@ -42,8 +42,8 @@ function sendToParentIsAnswerRight() {
 </script>
 
 <template>
-  <div class="p-3 w-[400px] border rounded-lg my-2">
-    <h3 class="text-center text-slate-600 py-2"><strong>{{ props.questionTitle[questionNumber] }}</strong></h3>
+  <div id="question" class="p-3 w-[400px] border rounded-lg my-2">
+    <h3 class="text-center text-slate-300 py-2"><strong>{{ props.questionTitle[questionNumber] }}</strong></h3>
     <div
     v-for="(option, index) in question.options"
     :key="option"
@@ -72,3 +72,11 @@ function sendToParentIsAnswerRight() {
     </div>
   </div>
 </template>
+
+<style scoped>
+@media screen and (max-width: 500px) {
+  #question {
+    width: 100%;
+  }
+}
+</style>

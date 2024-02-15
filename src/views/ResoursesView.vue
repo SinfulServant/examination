@@ -1,22 +1,35 @@
 <script setup>
 import { onMounted, ref } from "vue";
-// import ResourseForStudy from "../components/Shared/ResourseForStudy.vue";
-import resoursesJSON from "../../resourses.json";
+import ResourseForStudy from "../components/ResourseForStudy.vue";
+import ApiResourcesService from "../services/ApiResources.service";
+import Spiner from "../components/Shared/Spiner.vue";
 
-const resourses = ref([]);
+const resourcesTitles = ref([]);
+const resources = ref([]);
+let isResourcesDownloaded = false;
 
 onMounted(() => {
-  resourses.value = Object.keys(resoursesJSON);
+  ApiResourcesService.getResources().then((data) => {
+    console.log(data);
+    resources.value = data;
+    resourcesTitles.value = Object.keys(data);
+    isResourcesDownloaded = true;
+  });
 });
 </script>
 
 <template>
-  <div class="container mx-auto">
-    <h2 class="text-center text-2xl py-3">
-      Here you can find resourses where you can study
-    </h2>
-    <template v-for="resourse in resourses" :key="resourse">
-      <h3>{{ resourse }}</h3>
-    </template>
+  <div class="h-[100vh]">
+    <Spiner v-if="!isResourcesDownloaded"></Spiner>
+    <div class="container mx-auto">
+      <ResourseForStudy
+        v-for="(resourse, i) in resourcesTitles"
+        v-appearance-animation="{ delay: 500 + i * 20 }"
+        :key="resourse"
+        :urls="resources[resourse]"
+        :name="resourse"
+      >
+      </ResourseForStudy>
+    </div>
   </div>
 </template>

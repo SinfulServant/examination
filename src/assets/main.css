@@ -2,3 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    color: rgb(242, 242, 242);  
+    background: radial-gradient(circle at center, #222, #000);
+}
+
