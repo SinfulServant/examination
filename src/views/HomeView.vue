@@ -1,49 +1,30 @@
 <script setup>
 import { onMounted } from "vue";
+
 const cubes = document.getElementsByClassName("cube");
-let animationIsNotPlaying = true;
+let doesAnimPlay;
+
 onMounted(() => {
-  initForAnimation();
-  animReturning();
-  setTimeout(animReturning, 1600);
+  animIsPlaying();
 });
 
-function animReturning() {
-  if (animationIsNotPlaying) {
-    animationIsNotPlaying = false;
-    setTimeout(() => (animationIsNotPlaying = true), 1600);
-    for (let i = 0; i < cubes.length; i++) {
-      const cube = cubes[i].style.transform;
-      let xStep = cube.includes("(0deg)") ? 2 : -2;
-      let yStep = cube.includes("(0deg)") ? 3 : -3;
-      let rotateX = cube.includes("(0deg)") ? 0 : 90;
-      let rotateY = cube.includes("(0deg)") ? 0 : 135;
-      function animation() {
-        if (rotateX > 90) {
-          xStep = -2;
-          yStep = -3;
-          clearInterval(intervalForAnimation);
-        }
-        if (rotateX < 0) {
-          xStep = 2;
-          yStep = 3;
-          clearInterval(intervalForAnimation);
-        }
-        rotateX += xStep;
-        rotateY += yStep;
-        cubes[
-          i
-        ].style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      }
-      const intervalForAnimation = setInterval(animation, 20 + i * 2);
-    }
+function animActive() {
+  if (!doesAnimPlay) {
+    animIsPlaying();
+    doesAnimPlay = true;
+    const cubesArray = Array.from(cubes);
+    requestAnimationFrame(() => {
+      cubesArray.forEach((cube) => {
+        cube.classList.remove("animation");
+        requestAnimationFrame(() => cube.classList.add("animation"));
+      });
+    });
   }
 }
 
-function initForAnimation() {
-  for (let i = 0; i < cubes.length; i++) {
-    cubes[i].style.transform = "rotateX(0deg) rotateY(0deg)";
-  }
+function animIsPlaying() {
+  doesAnimPlay = true;
+  setTimeout(() => (doesAnimPlay = false), 2500);
 }
 </script>
 
@@ -53,91 +34,88 @@ function initForAnimation() {
       Hello! <br />
       Here you can test on different IT technologies and test your knowledge
     </h2>
-    <div @click="animReturning" class="container">
-      <div class="flex">
-        <div class="cube first-anim">
-          <div class="wall front"></div>
-          <div class="wall back"></div>
-          <div class="wall left"></div>
-          <div class="wall right"></div>
-          <div class="wall top"></div>
-          <div class="wall bottom"></div>
+    <div @click="animActive" class="container">
+      <div class="shadow-animation">
+        <div class="flex">
+          <div class="cube animation">
+            <div class="wall front"></div>
+            <div class="wall back"></div>
+            <div class="wall left"></div>
+            <div class="wall right"></div>
+            <div class="wall top"></div>
+            <div class="wall bottom"></div>
+          </div>
+          <div class="cube animation">
+            <div class="wall front"></div>
+            <div class="wall back"></div>
+            <div class="wall left"></div>
+            <div class="wall right"></div>
+            <div class="wall top"></div>
+            <div class="wall bottom"></div>
+          </div>
+          <div class="cube animation">
+            <div class="wall front"></div>
+            <div class="wall back"></div>
+            <div class="wall left"></div>
+            <div class="wall right"></div>
+            <div class="wall top"></div>
+            <div class="wall bottom"></div>
+          </div>
         </div>
-        <div class="cube first-anim">
-          <div class="wall front"></div>
-          <div class="wall back"></div>
-          <div class="wall left"></div>
-          <div class="wall right"></div>
-          <div class="wall top"></div>
-          <div class="wall bottom"></div>
+        <div class="flex">
+          <div class="cube animation">
+            <div class="wall front"></div>
+            <div class="wall back"></div>
+            <div class="wall left"></div>
+            <div class="wall right"></div>
+            <div class="wall top"></div>
+            <div class="wall bottom"></div>
+          </div>
+          <div class="cube animation">
+            <div class="wall front"></div>
+            <div class="wall back"></div>
+            <div class="wall left"></div>
+            <div class="wall right"></div>
+            <div class="wall top"></div>
+            <div class="wall bottom"></div>
+          </div>
+          <div class="cube animation">
+            <div class="wall front"></div>
+            <div class="wall back"></div>
+            <div class="wall left"></div>
+            <div class="wall right"></div>
+            <div class="wall top"></div>
+            <div class="wall bottom"></div>
+          </div>
         </div>
-        <div class="cube first-anim">
-          <div class="wall front"></div>
-          <div class="wall back"></div>
-          <div class="wall left"></div>
-          <div class="wall right"></div>
-          <div class="wall top"></div>
-          <div class="wall bottom"></div>
-        </div>
-      </div>
-      <div class="flex">
-        <div class="cube first-anim">
-          <div class="wall front"></div>
-          <div class="wall back"></div>
-          <div class="wall left"></div>
-          <div class="wall right"></div>
-          <div class="wall top"></div>
-          <div class="wall bottom"></div>
-        </div>
-        <div class="cube first-anim">
-          <div class="wall front"></div>
-          <div class="wall back"></div>
-          <div class="wall left"></div>
-          <div class="wall right"></div>
-          <div class="wall top"></div>
-          <div class="wall bottom"></div>
-        </div>
-        <div class="cube first-anim">
-          <div class="wall front"></div>
-          <div class="wall back"></div>
-          <div class="wall left"></div>
-          <div class="wall right"></div>
-          <div class="wall top"></div>
-          <div class="wall bottom"></div>
-        </div>
-      </div>
-      <div class="flex">
-        <div class="cube first-anim">
-          <div class="wall front"></div>
-          <div class="wall back"></div>
-          <div class="wall left"></div>
-          <div class="wall right"></div>
-          <div class="wall top"></div>
-          <div class="wall bottom"></div>
-        </div>
-        <div class="cube first-anim">
-          <div class="wall front"></div>
-          <div class="wall back"></div>
-          <div class="wall left"></div>
-          <div class="wall right"></div>
-          <div class="wall top"></div>
-          <div class="wall bottom"></div>
-        </div>
-        <div class="cube first-anim">
-          <div class="wall front"></div>
-          <div class="wall back"></div>
-          <div class="wall left"></div>
-          <div class="wall right"></div>
-          <div class="wall top"></div>
-          <div class="wall bottom"></div>
+        <div class="flex">
+          <div class="cube animation">
+            <div class="wall front"></div>
+            <div class="wall back"></div>
+            <div class="wall left"></div>
+            <div class="wall right"></div>
+            <div class="wall top"></div>
+            <div class="wall bottom"></div>
+          </div>
+          <div class="cube animation">
+            <div class="wall front"></div>
+            <div class="wall back"></div>
+            <div class="wall left"></div>
+            <div class="wall right"></div>
+            <div class="wall top"></div>
+            <div class="wall bottom"></div>
+          </div>
+          <div class="cube animation">
+            <div class="wall front"></div>
+            <div class="wall back"></div>
+            <div class="wall left"></div>
+            <div class="wall right"></div>
+            <div class="wall top"></div>
+            <div class="wall bottom"></div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- <button
-      class="rounded-lg py-1 px-3 bg-zinc-600 hover:bg-zinc-700 ease-linear text-2xl"
-    >
-      Pass random test!
-    </button> -->
   </div>
 </template>
 
@@ -152,11 +130,11 @@ function initForAnimation() {
   height: 90vh;
   margin: 0;
   -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 
 .container {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
 }
@@ -169,14 +147,16 @@ function initForAnimation() {
   height: 80px;
   margin: 0 -80px 0 0;
 }
-
-/* cube */
 .cube {
   position: relative;
   width: 1px;
   height: 1px;
   margin: 0 80px 0 0;
   transform-style: preserve-3d;
+}
+
+.animation {
+  animation: cubeAnim 3s;
 }
 .wall {
   width: 80px;
@@ -190,20 +170,51 @@ function initForAnimation() {
 }
 .front {
   transform: translateZ(calc(80px / 2));
+  animation: mymove 5s infinite;
 }
 .back {
   transform: translateZ(calc(-80px / 2)) rotateY(180deg);
+  animation: mymove 5s infinite;
 }
 .right {
   transform: translateX(calc(80px / 2)) rotateY(90deg);
+  animation: mymove 5s infinite;
 }
 .left {
   transform: translateX(calc(-80px / 2)) rotateY(-90deg);
+  animation: mymove 5s infinite;
 }
 .top {
   transform: translateY(calc(-80px / 2)) rotateX(90deg);
+  animation: mymove 5s infinite;
 }
 .bottom {
   transform: translateY(calc(80px / 2)) rotateX(-90deg);
+  animation: mymove 5s infinite;
+}
+
+@keyframes cubeAnim {
+  10% {
+    transform: rotateX(0) rotateY(0);
+  }
+
+  100% {
+    transform: rotateX(180deg) rotateY(180deg);
+  }
+}
+
+.shadow-animation {
+  width: 240px;
+  height: 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+@keyframes mymove {
+  50% {
+    box-shadow: 0 0 15px rgb(255, 255, 255);
+  }
 }
 </style>

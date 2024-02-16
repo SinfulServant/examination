@@ -111,7 +111,7 @@ function test($event){
   align-items: center;
   justify-content: center;
   position: fixed;
-  top: -100%;
+  top: -120%;
   right: 0;
   width: 100vw;
   height: 100vh;

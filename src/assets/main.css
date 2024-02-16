@@ -5,5 +5,22 @@
 body {
     color: rgb(242, 242, 242);  
     background: radial-gradient(circle at center, #222, #000);
+    transform: translateZ(0) scale(1, 1);
 }
 
+@media screen and (prefers-reduced-motion: reduce) {
+    #contacts {
+        transition-duration: 400ms;
+        -moz-animation-duration: 400ms;
+        -webkit-animation-duration: 400ms;
+        transition-property: all;
+        -moz-transition-property: all;
+        -webkit-transition-property: all;
+        animation-duration: 400ms;
+        -moz-animation-duration: 400ms;
+        -webkit-animation-duration: 400ms;
+        animation-timing-function: ease-in-out;
+        -moz-animation-timing-function: ease-in-out;
+        -webkit-animation-timing-function: ease-in-out;
+    }
+}
